@@ -7,12 +7,8 @@
 #ifndef Var_hpp 
 #define Var_hpp 
 #include "Value.hpp"
-
-using namespace std;
-
     
 namespace nuxvm {
-    typedef size_t ID;
 
     /// \brief Variables in NuXmv.
     class Var {
