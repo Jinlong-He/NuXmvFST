@@ -9,7 +9,7 @@
 #include "Var.hpp"
 #include "Value.hpp"
 
-namespace nuxvm {
+namespace nuxmvfst {
 
     /// \brief The Atomic fomula in the NuXmv
     class Atomic {

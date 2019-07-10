@@ -1,4 +1,4 @@
-//  NuXmv.hpp
+//  NuXmvFST.hpp
 //
 //  Created by Jinlong He on 2018/7/6.
 //  Copyright © 2018年 Jinlong He. All rights reserved.
@@ -8,7 +8,7 @@
 #define NuXmv_hpp
 #include "EnumVar.hpp"
 
-namespace nuxvm {
+namespace nuxmvfst {
     /// \brief A class for transfering to NuXmv.
     ///
     /// Examples:
@@ -31,7 +31,7 @@ namespace nuxvm {
     /// s1 -> mkTransition(condition, v2);
     /// s1 -> mkTransition(nullptr, v1);
     /// cout << solver.getSMV() << endl;
-    class NuXmv{
+    class NuXmvFST {
     protected:
         Vars vars;                      ///< the Vars for this NuXmv.
         Values values;                  ///< the whole values for this NuXmv.
@@ -40,11 +40,11 @@ namespace nuxvm {
 
     public:
         /// \brief Default construction function.
-        NuXmv() : targetConfig(nullptr) {
+        NuXmvFST() : targetConfig(nullptr) {
         }
 
         /// \brief Desconstruction function.
-        ~NuXmv() {
+        ~NuXmvFST() {
             for (Var* var: vars) {
                 delete var;
             }

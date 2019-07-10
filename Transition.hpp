@@ -8,7 +8,7 @@
 #define Transition_hpp 
 #include "Condition.hpp"
 
-namespace nuxvm {
+namespace nuxmvfst {
     /// /biref Transition in NuXmv.
     class Transition {
     private:

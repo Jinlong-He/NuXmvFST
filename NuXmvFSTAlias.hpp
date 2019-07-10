@@ -4,8 +4,8 @@
 //  Copyright © 2018年 Jinlong He. All rights reserved.
 //
 
-#ifndef Alias_hpp
-#define Alias_hpp
+#ifndef NuXmvFSTAlias_hpp
+#define NuXmvFSTAlias_hpp
 
 #include <climits>
 #include <math.h>
@@ -25,7 +25,8 @@
 #include <unordered_set>
 
 using namespace std;
-namespace nuxvm {
+namespace nuxmvfst {
+
     class Var;
     class Value;
     class Atomic;
@@ -44,5 +45,4 @@ namespace nuxvm {
     typedef size_t ID;
     
 }
-#endif /* Alias_hpp */
-
+#endif /* NuXmvFSTAlias_hpp */

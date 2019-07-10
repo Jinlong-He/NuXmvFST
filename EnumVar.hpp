@@ -7,9 +7,8 @@
 #ifndef EnumVar_hpp 
 #define EnumVar_hpp 
 #include "Transition.hpp"
-//#include "Transition.hpp"
 
-namespace nuxvm {
+namespace nuxmvfst {
 
     /// \brief Enum Variables in NuXmv.
     class EnumVar : public Var {

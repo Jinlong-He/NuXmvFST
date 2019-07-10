@@ -8,7 +8,7 @@
 #define Condition_hpp 
 #include "Atomic.hpp"
 
-namespace nuxvm {
+namespace nuxmvfst {
     /// \brief Conjunction of Atomics.
     class Conjunction {
     private:

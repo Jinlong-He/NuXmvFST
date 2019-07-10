@@ -6,10 +6,9 @@
 
 #ifndef Value_hpp 
 #define Value_hpp 
+#include "NuXmvFSTAlias.hpp"
 
-#include "Alias.hpp"
-
-namespace nuxvm {
+namespace nuxmvfst {
     /// \brief Values in NuXmv.
     class Value {
     protected:

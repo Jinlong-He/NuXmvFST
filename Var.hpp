@@ -8,7 +8,7 @@
 #define Var_hpp 
 #include "Value.hpp"
     
-namespace nuxvm {
+namespace nuxmvfst {
 
     /// \brief Variables in NuXmv.
     class Var {
