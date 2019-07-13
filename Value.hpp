@@ -27,6 +27,11 @@ namespace nuxmvfst {
             counter = id + 1;
         }
 
+        /// \brief Constrction with param.
+        /// \param str name for this Value.
+        Value(const string str) : id(counter++), name(str) {
+        }
+
         /// \brief Gets Id for this Value.
         /// \return ID.
         ID getID() {return id;}
@@ -49,8 +54,7 @@ namespace nuxmvfst {
             name = "v" + to_string(id);
         }
 
-        EnumValue(const string& str) : Value() {
-            name = str;
+        EnumValue(const string& str) : Value(str) {
         }
     };
 

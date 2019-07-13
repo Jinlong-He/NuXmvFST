@@ -93,16 +93,16 @@ namespace nuxmvfst {
         const Transitions& getTransitions() const {return transitions;}
 
         /// \brief Makes a transition in the transitions for this Var.
-        /// \param condition The condition in the transition.
+        /// \param expression The expression in the transition.
         /// \param var The var in the transition.
         /// \return Transition pointer
-        virtual Transition* mkTransition(Condition* condition, Var* var) = 0;
+        virtual Transition* mkTransition(Expression* expression, Var* var) = 0;
 
         /// \brief Makes and adds a transition in the transitions for this Var.
-        /// \param condition The condition in the transition.
+        /// \param expression The expression in the transition.
         /// \param value The value in the transition.
         /// \return Transition pointer
-        virtual Transition* mkTransition(Condition* condition, Value* value) = 0;
+        virtual Transition* mkTransition(Expression* expression, Value* value) = 0;
 
         /// \brief Gets the VAR string for this Var.
         /// \return string.

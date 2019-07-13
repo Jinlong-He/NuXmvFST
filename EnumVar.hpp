@@ -40,14 +40,14 @@ namespace nuxmvfst {
             }
         }
 
-        Transition* mkTransition(Condition* condition, Var* var) {
-            Transition* transition = new Transition(condition, var);
+        Transition* mkTransition(Expression* expression, Var* var) {
+            Transition* transition = new Transition(expression, var);
             transitions.push_back(transition);
             return transition;
         }
 
-        Transition* mkTransition(Condition* condition, Value* value) {
-            Transition* transition = new Transition(condition, value);
+        Transition* mkTransition(Expression* expression, Value* value) {
+            Transition* transition = new Transition(expression, value);
             transitions.push_back(transition);
             return transition;
         }

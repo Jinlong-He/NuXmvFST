@@ -6,13 +6,12 @@
 
 #ifndef Atomic_hpp 
 #define Atomic_hpp 
-#include "Var.hpp"
-#include "Value.hpp"
+#include "Expression.hpp"
 
 namespace nuxmvfst {
 
     /// \brief The Atomic fomula in the NuXmv
-    class Atomic {
+    class Atomic : public Expression {
     protected:
         Var* lhsVar;           ///< the left hand side Var for thie Atomic
         Var* rhsVar;           ///< the right hand side Var for this Atomic.

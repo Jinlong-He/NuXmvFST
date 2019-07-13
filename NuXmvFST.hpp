@@ -7,6 +7,7 @@
 #ifndef NuXmv_hpp
 #define NuXmv_hpp
 #include "EnumVar.hpp"
+#include "Atomic.hpp"
 
 namespace nuxmvfst {
     /// \brief A class for transfering to NuXmv.
@@ -33,10 +34,10 @@ namespace nuxmvfst {
     /// cout << solver.getSMV() << endl;
     class NuXmvFST {
     protected:
-        Vars vars;                      ///< the Vars for this NuXmv.
-        Values values;                  ///< the whole values for this NuXmv.
-        Condition* targetConfig;        ///< the vefication configuration for this NuXmv.
-        Conditions conditions;          ///< the Condition vector used to store Condition made in this NuXmv.
+        Vars vars;                      ///< the Vars for this NuXmvFST.
+        Values values;                  ///< the whole values for this NuXmvFST.
+        Expression* targetConfig;       ///< the vefication configuration for this NuXmvFST.
+        Expressions expressions;        ///< the Expressions made in this NuXmvFST.
 
     public:
         /// \brief Default construction function.
@@ -51,9 +52,29 @@ namespace nuxmvfst {
             for (Value* value : values) {
                 delete value;
             }
-            for (Condition* condition : conditions) {
-                delete condition;
+            for (Expression* exp: expressions) {
+                delete exp;
             }
+        }
+
+        /// \brief Gets Vars for this NuXmv.
+        /// \return reference of Vars.
+        Vars& getVars() {
+            return vars;
+        }
+
+        const Vars& getVars() const {
+            return vars;
+        }
+
+        /// \brief Gets Values for this NuXmv.
+        /// \return reference of Values.
+        Values& getValues() {
+            return values;
+        }
+
+        const Values& getValues() const {
+            return values;
         }
 
         /// \brief Makes a EnumVar for this NuXmv.
@@ -137,18 +158,58 @@ namespace nuxmvfst {
             return value;
         }
 
-        /// \brief Makes a Condition uesd in Transition for this NuXmv.
-        /// \return Condition pointer.
-        Condition* mkCondition() {
-            Condition* condition = new Condition();
-            conditions.push_back(condition);
-            return condition;
+        /// \brief Makes a EquAtomic for this Disjunction.
+        /// \param lVar lhs Var for this Atomic.
+        /// \param rValue rhs Value for this Atomic.
+        /// \param f Flag for this Atomic. Default is true.
+        EquAtomic* mkEquAtomic(Var* lVar, Value* rValue, bool f = true) {
+            EquAtomic* atomic = new EquAtomic(lVar, rValue, f);
+            expressions.push_back(atomic);
+            return atomic;
         }
 
+        /// \brief Makes a Conjunction Expression uesd in Transition for this NuXmv.
+        /// \return Pointer of ConjunctionExp.
+        ConjunctionExp* mkConjunctionExp() {
+            ConjunctionExp* exp = new ConjunctionExp();
+            expressions.push_back(exp);
+            return exp;
+        }
+
+        ConjunctionExp* mkConjunctionExp(Expression* e) {
+            ConjunctionExp* exp = new ConjunctionExp(e);
+            expressions.push_back(exp);
+            return exp;
+        }
+
+        ConjunctionExp* mkConjunctionExp(Expression* l, Expression* r) {
+            ConjunctionExp* exp = new ConjunctionExp(l, r);
+            expressions.push_back(exp);
+            return exp;
+        }
+        /// \brief Makes a Disjunction Expression uesd in Transition for this NuXmv.
+        /// \return Pointer of DisjunctionExp.
+        DisjunctionExp* mkDisjunctionExp() {
+            DisjunctionExp* exp = new DisjunctionExp();
+            expressions.push_back(exp);
+            return exp;
+        }
+
+        DisjunctionExp* mkDisjunctionExp(Expression* e) {
+            DisjunctionExp* exp = new DisjunctionExp(e);
+            expressions.push_back(exp);
+            return exp;
+        }
+
+        DisjunctionExp* mkDisjunctionExp(Expression* l, Expression* r) {
+            DisjunctionExp* exp = new DisjunctionExp(l, r);
+            expressions.push_back(exp);
+            return exp;
+        }
         /// \brief Makes target configuration for this NuXmv.
         /// \return Condition pointer.
-        Condition* mkTargetConfig() {
-            targetConfig = mkCondition();
+        Expression* mkTargetConfig() {
+            targetConfig = mkConjunctionExp();
             return targetConfig;
         }
 

@@ -6,37 +6,37 @@
 
 #ifndef Transition_hpp 
 #define Transition_hpp 
-#include "Condition.hpp"
+#include "Expression.hpp"
 
 namespace nuxmvfst {
     /// /biref Transition in NuXmv.
     class Transition {
     private:
-        Condition* condition;       ///< the condition for this Transition.
+        Expression* expression;     ///< the expression for this Transition.
         Value* targetValue;         ///< the target Value for this Transition.
         Var* targetVar;             ///< the target Var for this Transition.
     public:
         /// \brief Default construction function.
-        Transition() : condition(nullptr), targetValue(nullptr), targetVar(nullptr){}
+        Transition() : expression(nullptr), targetValue(nullptr), targetVar(nullptr){}
 
         /// \brief Construction function with params.
-        /// \param c The condition for this Transition.
+        /// \param c The expression for this Transition.
         /// \param v The value for this Transition.
-        Transition(Condition* c, Value* v) : condition(c), targetValue(v), targetVar(nullptr){}
+        Transition(Expression* exp, Value* v) : expression(exp), targetValue(v), targetVar(nullptr){}
 
         /// \brief Construction function with params.
-        /// \param c The condition for this Transition.
+        /// \param c The expression for this Transition.
         /// \param v The var for this Transition.
-        Transition(Condition* c, Var* v) : condition(c), targetValue(nullptr), targetVar(v) {}
+        Transition(Expression* exp, Var* v) : expression(exp), targetValue(nullptr), targetVar(v) {}
 
         /// \brief Desconstruction function.
         ~Transition() {
         }
 
-        /// \brief Gets the condition for this Transition.
-        /// \return Condition pointer.
-        Condition* getCondition() {return condition;}
-        Condition* getCondition() const {return condition;}
+        /// \brief Gets the expression for this Transition.
+        /// \return Expression pointer.
+        Expression* getExpression() {return expression;}
+        Expression* getExpression() const {return expression;}
 
         /// \brief Gets the stateVar for this Transition.
         /// \return Var pointer.
@@ -49,14 +49,14 @@ namespace nuxmvfst {
         Value* getValue() const {return targetValue;}
 
         string getStr() {
-            string conditionStr = "TRUE";
-            if (condition) {
-                conditionStr = condition -> getStr();
+            string expressionStr = "TRUE";
+            if (expression) {
+                expressionStr = expression -> getStr();
             }
             if (targetVar) {
-                return conditionStr + " : " + targetVar -> getName() + ";\n";
+                return expressionStr + " : " + targetVar -> getName() + ";\n";
             } else {
-                return conditionStr + " : " + targetValue -> getName() + ";\n";
+                return expressionStr + " : " + targetValue -> getName() + ";\n";
             }
         }
     };

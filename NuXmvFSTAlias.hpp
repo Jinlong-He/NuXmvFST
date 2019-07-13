@@ -30,18 +30,19 @@ namespace nuxmvfst {
     class Var;
     class Value;
     class Atomic;
-    class Conjunction;
-    class Condition;
+    class EquAtomic;
+    class Expression;
+    class ConjunctionExp;
+    class DisjunctionExp;
     class Transition;
     class NuXmv;
 
     typedef vector<Value*> Values;
     typedef vector<Var*> Vars;
     typedef vector<Atomic*> Atomics;
-    typedef vector<Conjunction*> DNF;
     typedef vector<Transition*> Transitions;
     typedef vector<Transition*> Transitions;
-    typedef vector<Condition*> Conditions;
+    typedef vector<Expression*> Expressions;
     typedef size_t ID;
     
 }
