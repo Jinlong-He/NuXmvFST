@@ -23,11 +23,14 @@
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
+#include "../Utility/Utility.hpp"
+using namespace utility;
 
 using namespace std;
 namespace nuxmvfst {
 
     class Var;
+    class EnumVar;
     class Value;
     class Atomic;
     class EquAtomic;
@@ -35,9 +38,10 @@ namespace nuxmvfst {
     class ConjunctionExp;
     class DisjunctionExp;
     class Transition;
-    class NuXmv;
+    class NuXmvFST;
 
     typedef vector<Value*> Values;
+    typedef vector<Value*> Path;
     typedef vector<Var*> Vars;
     typedef vector<Atomic*> Atomics;
     typedef vector<Transition*> Transitions;

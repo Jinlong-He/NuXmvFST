@@ -47,14 +47,14 @@ namespace nuxmvfst {
 
         /// \brief Gets the str for this Atomic.
         /// \return string.
-        virtual string getStr() = 0;
+        virtual string to_string() = 0;
     };
 
     /// \brief The Atomic fomula represents the equal relation.
     ///
     /// Examples: s1 = v1 or !(s2 = s3).
     class EquAtomic : public Atomic {
-    public:
+    private:
         EquAtomic() : Atomic() { 
         }
 
@@ -63,11 +63,11 @@ namespace nuxmvfst {
 
         EquAtomic(Var* lVar, Var* rVar, bool f = true) : Atomic(lVar, rVar, f) { 
         }
-
+    public:
         ~EquAtomic() {
         }
 
-        string getStr() {
+        string to_string() {
             string lhs = lhsVar -> getName();
             string rhs = "";
             if (rhsVar) rhs = rhsVar -> getName();
@@ -86,6 +86,8 @@ namespace nuxmvfst {
         string Not(const string& str) {
             return "!(" + str + ")";
         }
+
+        friend NuXmvFST;
     };
 };
 #endif /* Atomic_hpp*/

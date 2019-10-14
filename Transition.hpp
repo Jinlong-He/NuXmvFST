@@ -15,7 +15,7 @@ namespace nuxmvfst {
         Expression* expression;     ///< the expression for this Transition.
         Value* targetValue;         ///< the target Value for this Transition.
         Var* targetVar;             ///< the target Var for this Transition.
-    public:
+
         /// \brief Default construction function.
         Transition() : expression(nullptr), targetValue(nullptr), targetVar(nullptr){}
 
@@ -29,6 +29,7 @@ namespace nuxmvfst {
         /// \param v The var for this Transition.
         Transition(Expression* exp, Var* v) : expression(exp), targetValue(nullptr), targetVar(v) {}
 
+    public:
         /// \brief Desconstruction function.
         ~Transition() {
         }
@@ -48,10 +49,10 @@ namespace nuxmvfst {
         Value* getValue() {return targetValue;}
         Value* getValue() const {return targetValue;}
 
-        string getStr() {
+        string to_string() {
             string expressionStr = "TRUE";
             if (expression) {
-                expressionStr = expression -> getStr();
+                expressionStr = expression -> to_string();
             }
             if (targetVar) {
                 return expressionStr + " : " + targetVar -> getName() + ";\n";
@@ -59,6 +60,9 @@ namespace nuxmvfst {
                 return expressionStr + " : " + targetValue -> getName() + ";\n";
             }
         }
+
+        friend NuXmvFST;
+        friend EnumVar;
     };
 };
 #endif /* Transition_hpp */

@@ -14,8 +14,6 @@ namespace nuxmvfst {
     protected:
         ID id;              ///< the identity for this Value.
         string name;        ///< the name for this Value.
-    public:
-        static ID counter;          ///< the static counter for class Value.
 
         /// \brief Default construction function.
         Value() : id(counter++), name("") {
@@ -31,6 +29,8 @@ namespace nuxmvfst {
         /// \param str name for this Value.
         Value(const string str) : id(counter++), name(str) {
         }
+    public:
+        static ID counter;          ///< the static counter for class Value.
 
         /// \brief Gets Id for this Value.
         /// \return ID.
@@ -45,7 +45,7 @@ namespace nuxmvfst {
 
     /// \brief Enum Value in NuXmv.
     class EnumValue : public Value {
-    public:
+    private:
         EnumValue() : Value() {
             name = "v" + to_string(id);
         }
@@ -56,6 +56,8 @@ namespace nuxmvfst {
 
         EnumValue(const string& str) : Value(str) {
         }
+    public:
+        friend NuXmvFST;
     };
 
     /// \brief Integer Value in NuXmv.

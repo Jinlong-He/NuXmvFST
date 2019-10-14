@@ -18,8 +18,6 @@ namespace nuxmvfst {
         Values values;              ///< the available values for this Var.
         Value* initValue;           ///< the initial value for this Var.
         Transitions transitions;    ///< the transitions for this Var.
-    public:
-        static ID counter;          ///< the static counter for class Var.
 
         /// \brief Default construction function.
         Var() : id(counter++), name("s" + to_string(id)), initValue(nullptr) {
@@ -62,6 +60,9 @@ namespace nuxmvfst {
         /// \param v The initial value for this Var.
         Var(const string& str, const Values& vs, Value* v) : id(counter++), name(str), values(vs.begin(), vs.end()), initValue(v) {
         }
+
+    public:
+        static ID counter;          ///< the static counter for class Var.
 
         /// \brief Desconstruction function.
         virtual ~Var() {

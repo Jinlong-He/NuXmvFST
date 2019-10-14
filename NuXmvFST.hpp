@@ -187,6 +187,12 @@ namespace nuxmvfst {
             expressions.push_back(exp);
             return exp;
         }
+
+        ConjunctionExp* mkConjunctionExp(Expressions& expressions) {
+            ConjunctionExp* exp = new ConjunctionExp(expressions);
+            expressions.push_back(exp);
+            return exp;
+        }
         /// \brief Makes a Disjunction Expression uesd in Transition for this NuXmv.
         /// \return Pointer of DisjunctionExp.
         DisjunctionExp* mkDisjunctionExp() {
@@ -206,11 +212,19 @@ namespace nuxmvfst {
             expressions.push_back(exp);
             return exp;
         }
+
+        DisjunctionExp* mkDisjunctionExp(Expressions& expressions) {
+            DisjunctionExp* exp = new DisjunctionExp(expressions);
+            expressions.push_back(exp);
+            return exp;
+        }
+
         /// \brief Makes target configuration for this NuXmv.
         /// \return Condition pointer.
-        Expression* mkTargetConfig() {
-            targetConfig = mkConjunctionExp();
-            return targetConfig;
+        /// \brief Makes target configuration for this NuXmv.
+        /// \return Condition pointer.
+        void setTargetConfig(Expression* exp) {
+            targetConfig = exp;
         }
 
         /// \brief Gets the VAR part for this NuXmv.
@@ -246,8 +260,9 @@ namespace nuxmvfst {
         /// \brief Gets the INVARSPEC part for this NuXmv.
         /// \return string.
         string getINVARSPEC() {
-            string targetConfigStr = "TRUE";
-            if (targetConfig) targetConfigStr = targetConfig -> getStr();
+            string targetConfigStr = "";
+            if (targetConfig) targetConfigStr = targetConfig -> to_string();
+            if (targetConfigStr == "") targetConfigStr = "FALSE";
             return "INVARSPEC\n!(" + targetConfigStr + ");";
         }
 
@@ -260,7 +275,72 @@ namespace nuxmvfst {
         /// \brief Gets the SMV for this NuXmv.
         /// \return string.
         string getSMV() {
-            return getVAR() + getASSIGN_INIT() + getASSIGN_NEXT() + getINVARSPEC();
+            return "MODULE main\n" + getVAR() + getASSIGN_INIT() + getASSIGN_NEXT() + getINVARSPEC();
+        }
+
+        /// \biref Verify in terminal.
+        /// \return Content of terminal.
+        string verify(int argc, const char* argv[]) {
+            const char* fileName = "out.smv";
+            ofstream out(fileName);
+            if (out.is_open()) {
+                out << getSMV();
+                out.close();
+            }
+            string vf_cmd, rm_cmd("rm "), terminal;
+            for (int i = 0; i < argc; i++) {
+                vf_cmd += argv[i];
+            }
+            vf_cmd += fileName;
+            rm_cmd += fileName;
+            char buf_ps[2048];
+            FILE* ptr = NULL;
+            if((ptr = popen(vf_cmd.c_str(), "r")) != NULL)
+            {
+                while(fgets(buf_ps, 2048, ptr) != NULL)
+                    terminal.append(buf_ps);
+                pclose(ptr);
+                ptr = NULL;
+            }
+            //system(rm_cmd.c_str());
+            return terminal;
+        }
+
+        int getResult(const string& terminal) {
+            string patten_true("is true"), patten_false("is false");
+            if (terminal.find(patten_true) != string::npos) {
+                return 1;
+            } else if (terminal.find("is false") != string::npos) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+
+        /// \brief Gets path from Terminal.
+        /// \return Path.
+        Path getPath(const string& terminal, Var* var) {
+            unordered_map<string, Value*> valueMap;
+            for (Value* value : values) {
+                valueMap[value -> getName()] = value;
+            }
+            Path path;
+            vector<string> strs = Utility::split(terminal, "\n");
+            string patten = "    " + var -> getName() + " = ";
+            bool flag = false;
+            for (auto& str : strs) {
+                if (str.find("-> State:") != string::npos) {
+                    flag = true;
+                }
+                if (str.find(patten) == 0) {
+                    path.push_back(valueMap[Utility::split(str, " = ")[1]]);
+                    flag = false;
+                }
+            }
+            if (flag) {
+                path.push_back(path[path.size() - 1]);
+            }
+            return path;
         }
     };
 };

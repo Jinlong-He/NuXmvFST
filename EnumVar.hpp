@@ -12,7 +12,8 @@ namespace nuxmvfst {
 
     /// \brief Enum Variables in NuXmv.
     class EnumVar : public Var {
-    public:
+    private:
+
         EnumVar() : Var() {
         }
 
@@ -33,7 +34,7 @@ namespace nuxmvfst {
 
         EnumVar(const string& str, const Values& vs, Value* v) : Var(str, vs, v) {
         }
-
+    public:
         ~EnumVar() {
             for (Transition* transition : transitions) {
                 delete transition;
@@ -67,7 +68,7 @@ namespace nuxmvfst {
             if (transitions.size() == 0) return "";
             string res = Next(name);
             for (Transition* transition : transitions) {
-                res += transition -> getStr();
+                res += transition -> to_string();
             }
             return res + "esac;\n";
         }
@@ -93,6 +94,7 @@ namespace nuxmvfst {
             }
             return "{" + res + "};\n";
         }
+        friend NuXmvFST;
     };
 
 };
